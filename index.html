@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Validación de Cédula Dominicana</title>
+    <script>
+      function validarCedula() {
+        var cedula = document.getElementById("cedula").value;
+
+        // Se verifica que la cédula tenga 11 dígitos
+        if (cedula.length !== 11) {
+          alert("La cédula debe tener 11 dígitos.");
+          return;
+        }
+
+        // Se verifica que todos los caracteres sean números
+        if (!/^\d+$/.test(cedula)) {
+          alert("La cédula debe contener solo números.");
+          return;
+        }
+
+        // Se calcula el dígito verificador
+        var suma = 0;
+        var digitos = cedula.split("");
+        for (var i = 0; i < 10; i++) {
+          var digito = parseInt(digitos[i]);
+
+          if (i % 2 === 0) {
+            digito *= 2;
+            if (digito > 9) {
+              digito -= 9;
+            }
+          }
+
+          suma += digito;
+        }
+
+        var ultimoDigitoCalculado = (10 - (suma % 10)) % 10;
+        var ultimoDigitoCedula = parseInt(digitos[10]);
+
+        // Se compara el dígito verificador calculado con el último dígito de la cédula
+        if (ultimoDigitoCalculado === ultimoDigitoCedula) {
+          alert("La cédula es válida.");
+        } else {
+          alert("La cédula es inválida.");
+        }
+      }
+    </script>
+  </head>
+  <body>
+    <h1>Validación de Cédula Dominicana</h1>
+    <label for="cedula">Cédula:</label>
+    <input type="text" id="cedula" />
+    <button onclick="validarCedula()">Validar</button>
+  </body>
+</html>
